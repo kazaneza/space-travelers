@@ -11,11 +11,19 @@ const RocketsList = () => {
     dispatch(fetchData());
   }, [dispatch]);
 
+  const handleReserveClick = (id) => {
+    const newState = rockets.map((rocket) => {
+      if (rocket.id !== id) { return rocket; }
+      return { ...rocket, reserved: true };
+    });
+    dispatch({ type: 'rocket/reserveRocket', payload: newState });
+  };
+
   return (
     <ul className={styles.rocketList}>
 
       {rockets.map((rocket) => (
-        <li key={rocket.rocket_id} className={styles.rocketItem}>
+        <li key={rocket.id} className={styles.rocketItem}>
           {rocket.flickr_images.length > 0 && (
             <img src={rocket.flickr_images[0]} alt={rocket.name} className={styles.flickr} />
           )}
@@ -24,7 +32,7 @@ const RocketsList = () => {
             <p className={styles.description}>
               {rocket.description}
             </p>
-            <button className={styles.reserve} type="submit">Reserve Rocket</button>
+            <button className={styles.reserve} type="submit" onClick={() => handleReserveClick(rocket.id)}>Reserve Rocket</button>
           </div>
         </li>
       ))}

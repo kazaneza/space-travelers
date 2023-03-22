@@ -6,6 +6,7 @@ const URL = 'https://api.spacexdata.com/v3/rockets';
 const initialState = {
   loading: false,
   rockets: [],
+  reserved: false,
   error: '',
 };
 
