@@ -1,7 +1,9 @@
 import React from 'react';
 
 const Missions = () => (
-  <div />
+  <div>
+    gfhjgf
+  </div>
 );
 
 export default Missions;

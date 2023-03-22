@@ -1,9 +1,7 @@
 import React from 'react';
 
 const MyProfile = () => (
-  <div>
-    hghj
-  </div>
+  <div>as</div>
 );
 
 export default MyProfile;
