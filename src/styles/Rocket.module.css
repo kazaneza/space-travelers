@@ -42,3 +42,21 @@
   font-weight: bolder;
   border-radius: 5px;
 }
+
+.cancel {
+  height: 40px;
+  width: 200px;
+  margin-top: 20px;
+  color: white;
+  background-color: rgb(74, 115, 218);
+  font-weight: bolder;
+  border-radius: 5px;
+}
+
+.reserved {
+  background-color: rgb(26, 131, 96);
+  width: 70px;
+  margin-right: 10px;
+  border-radius: 2px;
+  color: white;
+}

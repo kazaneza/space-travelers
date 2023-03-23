@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchData } from '../redux/features/rockets/RocketSlice';
+import { fetchData, reserveRocket, cancelRocket } from '../redux/features/rockets/RocketSlice';
 import styles from '../styles/Rocket.module.css';
 
 const RocketsList = () => {
@@ -16,12 +16,19 @@ const RocketsList = () => {
       if (rocket.id !== id) { return rocket; }
       return { ...rocket, reserved: true };
     });
-    dispatch({ type: 'rocket/reserveRocket', payload: newState });
+    dispatch(reserveRocket(newState));
+  };
+
+  const handleCancelClick = (id) => {
+    const newState = rockets.map((rocket) => {
+      if (rocket.id !== id) { return rocket; }
+      return { ...rocket, reserved: false };
+    });
+    dispatch(cancelRocket(newState));
   };
 
   return (
     <ul className={styles.rocketList}>
-
       {rockets.map((rocket) => (
         <li key={rocket.id} className={styles.rocketItem}>
           {rocket.flickr_images.length > 0 && (
@@ -29,10 +36,27 @@ const RocketsList = () => {
           )}
           <div className={styles.textWrapper}>
             <h3 className={styles.name}>{rocket.rocket_name}</h3>
-            <p className={styles.description}>
-              {rocket.description}
-            </p>
-            <button className={styles.reserve} type="submit" onClick={() => handleReserveClick(rocket.id)}>Reserve Rocket</button>
+            <div className={styles.description}>
+              {rocket.reserved && (<span className={styles.reserved}>Reserved</span>)}
+              <span>{rocket.description}</span>
+            </div>
+            {rocket.reserved
+              ? (
+                <div>
+                  <button className={styles.cancel} type="button" onClick={() => handleCancelClick(rocket.id)}>Cancel Reservation</button>
+                </div>
+              )
+              : (
+                <div>
+                  <button
+                    className={styles.reserve}
+                    type="button"
+                    onClick={() => handleReserveClick(rocket.id)}
+                  >
+                    Reserve Rocket
+                  </button>
+                </div>
+              )}
           </div>
         </li>
       ))}

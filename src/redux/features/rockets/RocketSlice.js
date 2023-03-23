@@ -17,6 +17,16 @@ export const fetchData = createAsyncThunk('rockets/fetchData', () => axios
 const rocketSlice = createSlice({
   name: 'rocket',
   initialState,
+  reducers: {
+    reserveRocket: (state, action) => {
+      const states = state;
+      states.rockets = action.payload;
+    },
+    cancelRocket: (state, action) => {
+      const states = state;
+      states.rockets = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchData.pending, (state) => {
       const states = state;
@@ -30,10 +40,13 @@ const rocketSlice = createSlice({
     });
     builder.addCase(fetchData.rejected, (state, action) => {
       const states = state;
+      states.loading = false;
       states.rockets = [];
       states.error = action.error.message;
     });
   },
 });
+
+export const { reserveRocket, cancelRocket } = rocketSlice.actions;
 
 export default rocketSlice.reducer;
