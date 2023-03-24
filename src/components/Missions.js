@@ -33,11 +33,10 @@ const Missions = () => {
         </p>
       ) : (
         <>
-          <h2>Missions</h2>
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>Name</th>
+                <th>Mission</th>
                 <th>Description</th>
                 <th>Status</th>
                 <th>Action</th>
