@@ -27,11 +27,22 @@ export const missionSlice = createSlice({
         mission.reserved = true;
       }
     },
+    cancelMissionReservation: (state, action) => {
+      const missionId = action.payload;
+      const mission = state.missions.find((mission) => mission.mission_id === missionId);
+      if (mission) {
+        mission.reserved = false;
+      }
+    },
   },
 });
 
 export const {
-  setMissions, setMissionsStatus, setMissionsError, reserveMission,
+  setMissions,
+  setMissionsStatus,
+  setMissionsError,
+  reserveMission,
+  cancelMissionReservation,
 } = missionSlice.actions;
 
 export const fetchMissions = () => async (dispatch) => {
