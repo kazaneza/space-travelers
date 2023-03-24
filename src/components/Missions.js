@@ -48,13 +48,12 @@ const Missions = () => {
                 <tr key={mission.mission_id}>
                   <td>{mission.mission_name}</td>
                   <td>{mission.description}</td>
-                  <td>{mission.upcoming ? 'Upcoming' : 'Past'}</td>
+                  <td>{mission.reserved ? 'Active member' : 'Not a member'}</td>
                   <td>
                     {mission.reserved ? (
                       <div>
-                        <p className="text-muted">Reserved</p>
                         <button className="btn btn-danger" type="button" onClick={() => handleMissionCancel(mission.mission_id)}>
-                          Cancel Reservation
+                          Leave Mission
                         </button>
                       </div>
                     ) : (
