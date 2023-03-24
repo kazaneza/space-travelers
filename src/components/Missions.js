@@ -1,32 +1,49 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setMissions, selectMissions } from '../features/missions/missionSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { Table } from 'react-bootstrap';
+import { fetchMissions, selectMissions, selectMissionsStatus } from '../features/missions/missionSlice';
 
 const Missions = () => {
-  const dispatch = useDispatch();
   const missions = useSelector(selectMissions);
+  const missionsStatus = useSelector(selectMissionsStatus);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchMissions = async () => {
-      const response = await fetch('https://api.spacexdata.com/v3/missions');
-      const data = await response.json();
-      dispatch(setMissions(data));
-    };
-
-    if (missions.length === 0) {
-      fetchMissions();
-    }
-  }, [missions, dispatch]);
+    dispatch(fetchMissions());
+  }, [dispatch]);
 
   return (
     <div>
-      <h1>Missions</h1>
-      {missions.map((mission) => (
-        <div key={mission.mission_id}>
-          <h2>{mission.mission_name}</h2>
-          <p>{mission.description}</p>
-        </div>
-      ))}
+      {missionsStatus === 'loading' ? (
+        <p>Loading missions...</p>
+      ) : missionsStatus === 'failed' ? (
+        <p>
+          Failed to load missions:
+          {missions.error}
+        </p>
+      ) : (
+        <>
+          <h2>Missions</h2>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {missions.map((mission) => (
+                <tr key={mission.mission_id}>
+                  <td>{mission.mission_name}</td>
+                  <td>{mission.description}</td>
+                  <td>{mission.upcoming ? 'Upcoming' : 'Past'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </>
+      )}
     </div>
   );
 };
