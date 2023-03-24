@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Table } from 'react-bootstrap';
 import {
   fetchMissions, selectMissions, selectMissionsStatus, reserveMission, cancelMissionReservation,
-} from '../features/missions/missionSlice';
+} from '../redux/features/missions/missionSlice';
 
 const Missions = () => {
   const missions = useSelector(selectMissions);
