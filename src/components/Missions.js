@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table } from 'react-bootstrap';
 import {
-  fetchMissions, reserveMission, selectMissions, selectMissionsStatus,
+  fetchMissions, selectMissions, selectMissionsStatus, reserveMission, cancelMissionReservation,
 } from '../features/missions/missionSlice';
 
 const Missions = () => {
@@ -16,6 +16,10 @@ const Missions = () => {
 
   const handleMissionReserve = (id) => {
     dispatch(reserveMission(id));
+  };
+
+  const handleMissionCancel = (id) => {
+    dispatch(cancelMissionReservation(id));
   };
 
   return (
@@ -47,12 +51,16 @@ const Missions = () => {
                   <td>{mission.upcoming ? 'Upcoming' : 'Past'}</td>
                   <td>
                     {mission.reserved ? (
-                      <p className="text-muted">Reserved</p>
+                      <div>
+                        <p className="text-muted">Reserved</p>
+                        <button className="btn btn-danger" type="button" onClick={() => handleMissionCancel(mission.mission_id)}>
+                          Cancel Reservation
+                        </button>
+                      </div>
                     ) : (
-                      <button type="button" className="btn btn-primary" onClick={() => handleMissionReserve(mission.mission_id)}>
+                      <button className="btn btn-primary" type="button" onClick={() => handleMissionReserve(mission.mission_id)}>
                         Join Mission
                       </button>
-
                     )}
                   </td>
                 </tr>
