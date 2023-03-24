@@ -20,10 +20,19 @@ export const missionSlice = createSlice({
     setMissionsError: (state, action) => {
       state.error = action.payload;
     },
+    reserveMission: (state, action) => {
+      const missionId = action.payload;
+      const mission = state.missions.find((mission) => mission.mission_id === missionId);
+      if (mission) {
+        mission.reserved = true;
+      }
+    },
   },
 });
 
-export const { setMissions, setMissionsStatus, setMissionsError } = missionSlice.actions;
+export const {
+  setMissions, setMissionsStatus, setMissionsError, reserveMission,
+} = missionSlice.actions;
 
 export const fetchMissions = () => async (dispatch) => {
   dispatch(setMissionsStatus('loading'));
