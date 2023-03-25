@@ -12,20 +12,20 @@ const RocketsList = () => {
   }, [dispatch]);
 
   const handleReserveClick = (id) => {
-    const newState = rockets.map((rocket) => {
-      if (rocket.id !== id) { return rocket; }
-      return { ...rocket, reserved: true };
-    });
-    dispatch(reserveRocket(newState));
+    dispatch(reserveRocket(id));
+    const reservedRockets = JSON.parse(localStorage.getItem('reservedRockets')) || [];
+    localStorage.setItem('reservedRockets', JSON.stringify([...reservedRockets, id]));
   };
 
   const handleCancelClick = (id) => {
-    const newState = rockets.map((rocket) => {
-      if (rocket.id !== id) { return rocket; }
-      return { ...rocket, reserved: false };
-    });
-    dispatch(cancelRocket(newState));
+    dispatch(cancelRocket(id));
+    const reservedRockets = JSON.parse(localStorage.getItem('reservedRockets')) || [];
+    localStorage.setItem('reservedRockets', JSON.stringify(reservedRockets.filter((rocketId) => rocketId !== id)));
   };
+
+  const reservedRockets = JSON.parse(localStorage.getItem('reservedRockets')) || [];
+
+  const reservedRocketIds = new Set(reservedRockets);
 
   return (
     <ul className={styles.rocketList}>
@@ -37,10 +37,10 @@ const RocketsList = () => {
           <div className={styles.textWrapper}>
             <h3 className={styles.name}>{rocket.rocket_name}</h3>
             <div className={styles.description}>
-              {rocket.reserved && (<span className={styles.reserved}>Reserved</span>)}
+              {reservedRocketIds.has(rocket.id) && (<span className={styles.reserved}>Reserved</span>)}
               <span>{rocket.description}</span>
             </div>
-            {rocket.reserved
+            {reservedRocketIds.has(rocket.id)
               ? (
                 <div>
                   <button className={styles.cancel} type="button" onClick={() => handleCancelClick(rocket.id)}>Cancel Reservation</button>

@@ -20,6 +20,7 @@
     "import/no-unresolved": "off",
     "no-param-reassign": "off",
     "no-nested-ternary": "off",
+    "max-len": "off",
     "no-shadow": "off"
   },
   "ignorePatterns": [
