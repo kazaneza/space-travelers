@@ -16,12 +16,6 @@ const Missions = () => {
     }
   }, [dispatch, missions]);
 
-  //   useEffect(() => {
-  //     if (rockets.length === 0) {
-  //       dispatch(fetchRockets());
-  //     }
-  //   }, [dispatch, rockets]);
-
   const handleMissionReserve = (id) => {
     dispatch(reserveMission(id));
   };
