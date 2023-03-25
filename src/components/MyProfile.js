@@ -5,9 +5,11 @@ import styles from '../styles/MyProfile.module.css';
 
 const MyProfile = () => {
   const rockets = useSelector((state) => state.rocket.rockets);
+
+  const rocketin = [].concat(...rockets);
   const missions = useSelector(selectMissions);
 
-  const filterRocketName = () => rockets.filter((rocket) => rocket.reserved);
+  const filterRocketName = () => rocketin.filter((rocket) => rocket.reserved);
   const filterMissionByName = () => missions.filter((mission) => mission.reserved);
 
   return (
